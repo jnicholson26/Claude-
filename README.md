@@ -18,6 +18,7 @@ then mirror the result back here. Treat this repo as history, review and backup.
     policy/    AI access register: permissions granted, who approved them, what is open
     skills/    The crew. giga, watt, frick, frack, bodie, prologis-commissioning,
                scoop-api-ops
+    tools/     The mirror script and its safety guard
 
 ## What is deliberately NOT here, and must stay out
 
@@ -40,7 +41,39 @@ Credentials of any kind. Nothing in this repo should ever require a secret to be
     frack    Software subject matter expert across Scoop, Smartsheet, Pipedrive.
     frick    Data gathering and loading.
 
-## Pushing
+## Syncing
+
+A scheduled task ("Claude repo sync") runs this on weekdays, and you can run it by hand
+any time:
+
+    powershell.exe -NoProfile -ExecutionPolicy Bypass -File tools\Sync-Skills.ps1
+
+Add `-DryRun` to see what it would commit without committing. It mirrors the seven crew
+skills out of the local Claude skills cache, strips the Playbook, runs the safety guard,
+then commits and pushes. Output is one of `PUSHED <sha>`, `NO CHANGE`, or `ABORT: ...`,
+and every run appends a line to `sync.log` (local only, gitignored).
+
+### The safety guard
+
+It aborts before staging anything if any of these fail:
+
+  A. `skills/giga/SKILL.md` must end with the exact approved Playbook placeholder, so a
+     silent failure of the strip step cannot slip through.
+  B. No file here may contain any substantial line of the real Playbook, read live from
+     the cache at scan time. This is the main guard and it updates itself as the
+     Playbook changes.
+  C. No file may contain a string listed in `tools/forbidden-strings.txt` — the backstop
+     for private content that has since been edited out of the Playbook but could still
+     be sitting in an old file here.
+
+Keep entries in `forbidden-strings.txt` specific. The first version of this guard used
+generic phrases like "long-term memory", which also appear in the skills' own
+instructional prose, so it fired on every run and blocked the sync.
+
+**An abort is the guard working.** Read what it names, fix the leak at the source, and
+run again. Do not loosen the guard to get a push through.
+
+## Pushing by hand
 
     git add .
     git commit -m "your message"
