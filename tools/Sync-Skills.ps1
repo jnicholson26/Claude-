@@ -21,10 +21,18 @@
 [CmdletBinding()]
 param(
     [switch]$DryRun,
-    [string]$RepoRoot = (Split-Path -Parent $PSScriptRoot)
+    [string]$RepoRoot
 )
 
 $ErrorActionPreference = 'Stop'
+
+# $PSScriptRoot is not reliably populated inside a param() default when the
+# script is launched with -File, so resolve the repo root here instead.
+if ([string]::IsNullOrWhiteSpace($RepoRoot)) {
+    $here = if ($PSScriptRoot) { $PSScriptRoot } else { Split-Path -Parent $PSCommandPath }
+    $RepoRoot = Split-Path -Parent $here
+}
+$RepoRoot = (Resolve-Path -LiteralPath $RepoRoot).Path
 
 $CrewSkills = @('giga','watt','frick','frack','bodie','prologis-commissioning','scoop-api-ops')
 
