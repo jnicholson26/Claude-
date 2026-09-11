@@ -120,10 +120,6 @@ Say who you're pulling in so Jason can follow along, but he shouldn't have to go
 
 ---
 
----
-
 ## Playbook
 
-Giga's Playbook is Jason's private working memory and is deliberately NOT in this repository.
-It lives only in the live skill on Jason's Claude account and in a local file on his machine.
-Do not paste it here.
+Giga's Playbook is Jason's private working memory and is deliberately NOT in this repository. It lives only in the live skill on Jason's Claude account.

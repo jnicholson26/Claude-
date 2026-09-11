@@ -1,0 +1,15 @@
+# Literal strings that must never appear in this repository.
+#
+# The main guard in Sync-Skills.ps1 compares the repo against the live Playbook
+# in the skills cache, so it updates itself automatically. This file is the
+# backstop for the case that guard cannot see: something private that has since
+# been edited OUT of the Playbook, but could still be sitting in an old file here.
+#
+# One string per line. Matching is literal and case-sensitive. Blank lines and
+# lines starting with # are ignored.
+#
+# Keep these specific. A generic phrase like "long-term memory" or
+# "What I still don't know" also appears in the skills' own instructional prose,
+# which is what made the first version of this guard fire on every run.
+
+337,937

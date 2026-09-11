@@ -14,6 +14,10 @@ mbl-operating-picture*
 token*
 *credential*
 
+# Local run history for tools/Sync-Skills.ps1. Kept on Jason's machine only,
+# so a sync that changes nothing produces no commit.
+sync.log
+
 # Junk
 .DS_Store
 Thumbs.db
