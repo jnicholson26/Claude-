@@ -1,0 +1,20 @@
+# Private working memory. Never commit.
+*PRIVATE*
+playbook*
+Playbook*
+giga-playbook*
+
+# Commercially sensitive analysis
+mbl-operating-picture*
+
+# Secrets
+.env
+*.key
+*.pem
+token*
+*credential*
+
+# Junk
+.DS_Store
+Thumbs.db
+~$*
